@@ -18,7 +18,7 @@ public class AccountTest {
 
     @Test
     public void checkBalance(){
-        assertThat(account.getBalance(),is(10000));
+        assertThat(account.getBalance(),is(10000.0));
     }
     @Test
     public void checkAccountNumber(){
@@ -38,7 +38,7 @@ public class AccountTest {
     @Test
     public void withdrawAmount() throws MinimumBalanceError {
         account.withDraw(1000);
-        assertThat(account.getBalance(),is(9000));
+        assertThat(account.getBalance(),is(9000.0));
     }
 
     @Test(expected = MinimumBalanceError.class)

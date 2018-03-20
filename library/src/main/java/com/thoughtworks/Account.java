@@ -5,14 +5,22 @@ public class Account {
     private double balance;
 
     public Account(String accountNumber, double balance) throws MinimumBalanceError, InvalidAccountNumber {
-        if(!accountNumber.matches("\\d{4}-\\d{4}")){
-            throw new InvalidAccountNumber();
-        }
+        validateAccountNumber(accountNumber);
         this.accountNumber = accountNumber;
+        validateMinimumBalance(balance);
+        this.balance = balance;
+    }
+
+    private void validateMinimumBalance(double balance) throws MinimumBalanceError {
         if(balance<1000){
             throw new MinimumBalanceError();
         }
-        this.balance = balance;
+    }
+
+    private void validateAccountNumber(String accountNumber) throws InvalidAccountNumber {
+        if(!accountNumber.matches("\\d{4}-\\d{4}")){
+            throw new InvalidAccountNumber();
+        }
     }
 
     public double getBalance() {
@@ -24,9 +32,7 @@ public class Account {
     }
 
     public void withDraw(double amount) throws MinimumBalanceError {
-        if((this.getBalance()-amount)<1000){
-            throw new MinimumBalanceError();
-        }
+        validateMinimumBalance(this.getBalance()-amount);
         this.balance -= amount;
     }
 }
