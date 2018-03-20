@@ -31,8 +31,27 @@ public class AccountTest {
     }
 
     @Test(expected = InvalidAccountNumber.class)
-    public void validateAccountNumber() throws InvalidAccountNumber, MinimumBalanceError {
+    public void throwsErrorWhenAccountNumContainsOnlyNumbers() throws InvalidAccountNumber, MinimumBalanceError {
         new Account("1234",2000);
+    }
+
+    @Test(expected = InvalidAccountNumber.class)
+    public void throwsErrorIfAccountNumberContainsAlphabetsOnly() throws InvalidAccountNumber, MinimumBalanceError {
+        new Account("abcd",10000);
+    }
+
+    @Test(expected = InvalidAccountNumber.class)
+    public void throwsErrorWhenAccNumIsShort() throws InvalidAccountNumber, MinimumBalanceError {
+        new Account("1234-123",4000);
+    }
+
+    @Test
+    public void shouldNotAlterBalanceWhenBalanceGoesBelowMinimumBalanceLimit() {
+        try {
+            account.withDraw(9400);
+        } catch (MinimumBalanceError minimumBalanceError) {
+            assertThat(account.getBalance(),is(10000.0));
+        }
     }
 
     @Test
