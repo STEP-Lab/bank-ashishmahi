@@ -13,7 +13,7 @@ public class AccountTest {
 
     @Before
     public void setUp() throws Exception, MinimumBalanceError, InvalidAccountNumber {
-            account = new Account("1234-1234", 10000);
+            account = new Account("1234-1234",10000);
     }
 
     @Test
