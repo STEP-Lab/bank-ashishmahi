@@ -2,7 +2,7 @@ package com.thoughtworks;
 
 public class Account {
     private String accountNumber;
-    private final int balance;
+    private int balance;
 
     public Account(String accountNumber, int balance) throws MinimumBalanceError, InvalidAccountNumber {
         if(!accountNumber.matches("\\d{4}-\\d{4}")){
@@ -21,5 +21,12 @@ public class Account {
 
     public String getAccountNumber() {
         return accountNumber;
+    }
+
+    public void withDraw(int amount) throws MinimumBalanceError {
+        if((this.getBalance()-amount)<1000){
+            throw new MinimumBalanceError();
+        }
+        this.balance -= amount;
     }
 }

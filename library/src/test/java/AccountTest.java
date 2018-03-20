@@ -13,12 +13,12 @@ public class AccountTest {
 
     @Before
     public void setUp() throws Exception, MinimumBalanceError, InvalidAccountNumber {
-            account = new Account("1234-1234", 1000);
+            account = new Account("1234-1234", 10000);
     }
 
     @Test
     public void checkBalance(){
-        assertThat(account.getBalance(),is(1000));
+        assertThat(account.getBalance(),is(10000));
     }
     @Test
     public void checkAccountNumber(){
@@ -33,5 +33,16 @@ public class AccountTest {
     @Test(expected = InvalidAccountNumber.class)
     public void validateAccountNumber() throws InvalidAccountNumber, MinimumBalanceError {
         new Account("1234",2000);
+    }
+
+    @Test
+    public void withdrawAmount() throws MinimumBalanceError {
+        account.withDraw(1000);
+        assertThat(account.getBalance(),is(9000));
+    }
+
+    @Test(expected = MinimumBalanceError.class)
+    public void minimumBalanceRequired() throws MinimumBalanceError {
+        account.withDraw(9500);
     }
 }
