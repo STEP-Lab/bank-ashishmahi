@@ -1,18 +1,16 @@
 package com.thoughtworks;
 
 public class Account {
-    private static final int minimunBalance = 1000;
-    private AccountNumber accountNumber;
+    private static final int minimumBalance = 1000;
     private double balance;
 
     public Account(AccountNumber accountNumber, double balance) throws MinimumBalanceError {
-        this.accountNumber = accountNumber;
         validateMinimumBalance(balance);
         this.balance = balance;
     }
 
     private void validateMinimumBalance(double balance) throws MinimumBalanceError {
-        if(balance< minimunBalance){
+        if(balance< minimumBalance){
             throw new MinimumBalanceError();
         }
     }
