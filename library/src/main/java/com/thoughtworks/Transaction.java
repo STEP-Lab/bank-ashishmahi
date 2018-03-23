@@ -5,11 +5,11 @@ import java.util.Objects;
 
 public abstract class Transaction {
     protected final double amount;
-    protected final String to;
+    protected final String source;
     protected final Date date;
 
     public Transaction(String anotherAccount, double amount, Date date) {
-        this.to = anotherAccount;
+        this.source = anotherAccount;
         this.amount = amount;
         this.date = date;
     }
@@ -24,12 +24,11 @@ public abstract class Transaction {
         if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
         return Double.compare(that.amount, amount) == 0 &&
-                Objects.equals(to, that.to);
+                Objects.equals(source, that.source);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(amount, to);
+        return Objects.hash(amount, source);
     }
 }
