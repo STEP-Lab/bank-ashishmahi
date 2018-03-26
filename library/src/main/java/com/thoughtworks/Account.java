@@ -5,13 +5,12 @@ public class Account {
     private final AccountNumber accountNumber;
     private double balance;
 
-    public Account(AccountNumber accountNumber, double balance) throws MinimumBalanceError {
+    private Account(AccountNumber accountNumber, double balance) {
         this.accountNumber = accountNumber;
-        validateMinimumBalance(balance);
         this.balance = balance;
     }
 
-    private void validateMinimumBalance(double balance) throws MinimumBalanceError {
+    private static void validateMinimumBalance(double balance) throws MinimumBalanceError {
         if(balance< minimumBalance){
             throw new MinimumBalanceError();
         }
@@ -24,6 +23,11 @@ public class Account {
     public void withDraw(double amount) throws MinimumBalanceError {
         validateMinimumBalance(this.getBalance()-amount);
         this.balance -= amount;
+    }
+
+    public static Account createAccount(AccountNumber accountNumber,double balance) throws MinimumBalanceError {
+        validateMinimumBalance(balance);
+        return new Account(accountNumber,balance);
     }
 
 }
