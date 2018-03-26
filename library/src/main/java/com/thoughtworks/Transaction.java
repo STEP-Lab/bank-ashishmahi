@@ -8,8 +8,8 @@ public abstract class Transaction {
     protected final String source;
     protected final Date date;
 
-    public Transaction(String anotherAccount, double amount, Date date) {
-        this.source = anotherAccount;
+    public Transaction(String source, double amount, Date date) {
+        this.source = source;
         this.amount = amount;
         this.date = date;
     }

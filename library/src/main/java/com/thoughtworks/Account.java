@@ -20,7 +20,10 @@ public class Account {
         return balance;
     }
 
-    public void withDraw(double amount) throws MinimumBalanceError {
+    public void withDraw(double amount) throws MinimumBalanceError, InvalidAmountException {
+        if(amount<0){
+            throw new InvalidAmountException();
+        }
         validateMinimumBalance(this.getBalance()-amount);
         this.balance -= amount;
     }

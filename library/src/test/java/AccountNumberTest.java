@@ -1,7 +1,5 @@
-import com.thoughtworks.Account;
 import com.thoughtworks.AccountNumber;
 import com.thoughtworks.InvalidAccountNumber;
-import com.thoughtworks.MinimumBalanceError;
 import org.junit.Test;
 
 public class AccountNumberTest {

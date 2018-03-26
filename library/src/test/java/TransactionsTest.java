@@ -12,13 +12,13 @@ public class TransactionsTest {
     public void mustRecordDebitTransaction() {
         Transactions transactions = new Transactions();
         transactions.debit(1000,"Aditi");
-        assertThat(transactions.list,hasItem(new DebitTransaction(new Date(),1000,"Aditi")));
+        assertThat(transactions.list,hasItem(new DebitTransaction(1000, "Aditi", new Date())));
     }
 
     @Test
     public void mustRecordCreditTransaction() {
         Transactions transactions = new Transactions();
         transactions.credit(1000,"Aditi");
-        assertThat(transactions.list,hasItem(new CreditTransaction(new Date(),1000,"Aditi")));
+        assertThat(transactions.list,hasItem(new CreditTransaction(1000, "Aditi", new Date())));
     }
 }

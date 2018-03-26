@@ -1,7 +1,4 @@
-import com.thoughtworks.Account;
-import com.thoughtworks.AccountNumber;
-import com.thoughtworks.InvalidAccountNumber;
-import com.thoughtworks.MinimumBalanceError;
+import com.thoughtworks.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,7 +25,7 @@ public class AccountTest {
 
 
     @Test
-    public void shouldNotAlterBalanceWhenBalanceGoesBelowMinimumBalanceLimit() {
+    public void shouldNotAlterBalanceWhenBalanceGoesBelowMinimumBalanceLimit() throws InvalidAmountException {
         try {
             account.withDraw(9400);
         } catch (MinimumBalanceError minimumBalanceError) {
@@ -37,13 +34,22 @@ public class AccountTest {
     }
 
     @Test
-    public void withdrawAmount() throws MinimumBalanceError {
+    public void withdrawAmount() throws MinimumBalanceError, InvalidAmountException {
         account.withDraw(1000);
         assertThat(account.getBalance(),is(9000.0));
     }
 
+    @Test
+    public void shouldNotWithDrawNegativeAmount() throws MinimumBalanceError, InvalidAmountException {
+        try{
+        account.withDraw(-1000);
+        } catch (InvalidAmountException e){
+            assertThat(account.getBalance(),is(10000.0));
+        }
+    }
+
     @Test(expected = MinimumBalanceError.class)
-    public void minimumBalanceRequired() throws MinimumBalanceError {
+    public void minimumBalanceRequired() throws MinimumBalanceError, InvalidAmountException {
         account.withDraw(9500);
     }
 }

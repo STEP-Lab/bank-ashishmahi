@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class CreditTransaction extends Transaction {
 
-    public CreditTransaction(Date date, double amount, String anotherAccount) {
+    public CreditTransaction(double amount, String anotherAccount,Date date) {
         super(anotherAccount, amount, date);
 
     }
