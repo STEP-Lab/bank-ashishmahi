@@ -51,16 +51,25 @@ public class TransactionsTest {
     }
 
     @Test
-    public void filterTransactionByType() {
+    public void getAllCreditTransaction() {
         transactions.debit(1000,"Aditi",1000);
         transactions.credit(400,"Aditi",1000);
         transactions.debit(1400,"Aditi",1000);
-        Transactions expected = this.transactions.filterByType("credit");
+        Transactions expected = this.transactions.getAllCredit();
         assertThat(expected.list,hasItem(new CreditTransaction(400,"Aditi",1000)));
     }
 
     @Test
-    public void shouldPrintInCSVFile() throws FileNotFoundException, UnsupportedEncodingException {
+    public void getAllDebitTransaction() {
+        transactions.credit(1000,"Aditi",1000);
+        transactions.credit(400,"Aditi",1000);
+        transactions.debit(1400,"Aditi",1000);
+        Transactions expected = this.transactions.getAllDebit();
+        assertThat(expected.list,hasItem(new DebitTransaction(1400,"Aditi",1000)));
+    }
+
+    @Test
+    public void shouldPrintInFile() throws FileNotFoundException, UnsupportedEncodingException {
         transactions.credit(1000,"Aditi",1000);
         ArrayList<String> expected = new ArrayList<>();
         PrintWriter writer = new PrintWriter("file-name.txt", "utf-8"){

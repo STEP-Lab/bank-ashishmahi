@@ -36,10 +36,19 @@ public class Transactions {
         }
     }
 
-    public Transactions filterByType(String type) {
+    public Transactions getAllCredit() {
         Transactions transactions = new Transactions();
-        for (Transaction transaction: list) {
-            if(transaction.getType()==type){
+        for (Transaction transaction : list) {
+            if(transaction instanceof CreditTransaction){
+                transactions.list.add(transaction);
+            }
+        }
+            return transactions;
+    }
+    public Transactions getAllDebit() {
+        Transactions transactions = new Transactions();
+        for (Transaction transaction : list) {
+            if(transaction instanceof DebitTransaction){
                 transactions.list.add(transaction);
             }
         }

@@ -44,6 +44,7 @@ public abstract class Transaction {
                 ", source='" + source + '\'' +
                 ", date=" + date +
                 ", type='" + type + '\'' +
+                ", balance=" + balance +
                 '}';
     }
 
