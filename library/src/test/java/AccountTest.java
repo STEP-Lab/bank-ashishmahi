@@ -40,7 +40,7 @@ public class AccountTest {
     }
 
     @Test
-    public void shouldNotWithDrawNegativeAmount() throws MinimumBalanceError, InvalidAmountException {
+    public void shouldNotWithDrawNegativeAmount() throws MinimumBalanceError {
         try{
         account.withDraw(-1000);
         } catch (InvalidAmountException e){

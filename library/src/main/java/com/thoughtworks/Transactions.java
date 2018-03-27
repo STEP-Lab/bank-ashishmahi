@@ -2,6 +2,7 @@ package com.thoughtworks;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Transactions {
     public ArrayList<Transaction> list;
@@ -20,9 +21,9 @@ public class Transactions {
 
     public Transactions filterByAmountGreaterThan(double amount) {
         Transactions transactions = new Transactions();
-        for (Transaction transacction: list) {
-            if(transacction.getAmount()>amount){
-                transactions.list.add(transacction);
+        for (Transaction transaction: list) {
+            if(transaction.getAmount()>amount){
+                transactions.list.add(transaction);
             }
         }
         return transactions;
@@ -33,4 +34,25 @@ public class Transactions {
             writer.println(transaction.toString());
         }
     }
+
+    public Transactions filterByType(String type) {
+        Transactions transactions = new Transactions();
+        for (Transaction transaction: list) {
+            if(transaction.getType()==type){
+                transactions.list.add(transaction);
+            }
+        }
+        return transactions;
+    }
+
+//    public Transactions filterByDateAfter(Date date) {
+//        Transactions transactions = new Transactions();
+//        for (Transaction transaction: list) {
+//            if(transaction.getDate()>date){
+//                transactions.list.add(transaction);
+//            }
+//        }
+//        return transactions;
+//    }
+
 }

@@ -4,9 +4,15 @@ import java.util.Date;
 
 public class CreditTransaction extends Transaction {
 
-    public CreditTransaction(double amount, String anotherAccount,Date date) {
-        super(anotherAccount, amount, date);
+    private static final String type = "credit";
 
+
+    public String getType() {
+        return type;
+    }
+
+    public CreditTransaction(double amount, String anotherAccount, Date date) {
+        super(anotherAccount, amount, date);
     }
 
     public CreditTransaction(double amount, String to) {

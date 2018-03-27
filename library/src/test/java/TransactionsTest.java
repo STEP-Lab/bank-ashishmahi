@@ -1,4 +1,3 @@
-import com.sun.org.apache.xpath.internal.operations.String;
 import com.thoughtworks.CreditTransaction;
 import com.thoughtworks.DebitTransaction;
 import com.thoughtworks.Transactions;
@@ -18,7 +17,7 @@ public class TransactionsTest {
     private Transactions transactions;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         transactions = new Transactions();
     }
 
@@ -37,10 +36,10 @@ public class TransactionsTest {
     @Test
     public void printTransaction() throws FileNotFoundException, UnsupportedEncodingException {
         transactions.credit(1000,"Aditi");
-        ArrayList<java.lang.String> expected = new ArrayList<>();
+        ArrayList<String> expected = new ArrayList<>();
         PrintWriter writer = new PrintWriter("file-name.txt", "utf-8"){
             @Override
-            public void println(java.lang.String x) {
+            public void println(String x) {
                 expected.add(x);
             }
         };
@@ -56,5 +55,22 @@ public class TransactionsTest {
         transactions.credit(1400,"Aditi");
         Transactions expected = this.transactions.filterByAmountGreaterThan(1000);
         assertThat(expected.list,hasItems(new CreditTransaction(1400,"Aditi")));
+    }
+
+    @Test
+    @Ignore
+    public void filterTransactionByDate() {
+        transactions.credit(1000,"Aditi");
+        transactions.credit(400,"Aditi");
+//        Transactions expected = this.transactions.filterByDateAfter(new Date());
+    }
+
+    @Test
+    public void filterTransactionByType() {
+        transactions.debit(1000,"Aditi");
+        transactions.credit(400,"Aditi");
+        transactions.debit(1400,"Aditi");
+        Transactions expected = this.transactions.filterByType("credit");
+        assertThat(expected.list,hasItem(new CreditTransaction(400,"Aditi")));
     }
 }

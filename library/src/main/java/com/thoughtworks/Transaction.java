@@ -7,12 +7,15 @@ public abstract class Transaction {
     protected final double amount;
     protected final String source;
     protected final Date date;
+    protected final String type = null;
 
     public Transaction(String source, double amount, Date date) {
         this.source = source;
         this.amount = amount;
         this.date = date;
     }
+
+    public abstract String getType();
 
     public Date getDate() {
         return date;
@@ -38,6 +41,7 @@ public abstract class Transaction {
                 "amount=" + amount +
                 ", source='" + source + '\'' +
                 ", date=" + date +
+                ", type='" + type + '\'' +
                 '}';
     }
 
@@ -45,3 +49,4 @@ public abstract class Transaction {
         return amount;
     }
 }
+
