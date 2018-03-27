@@ -23,19 +23,45 @@ public class TransactionsTest {
 
     @Test
     public void mustRecordDebitTransaction() {
-        transactions.debit(1000,"Aditi");
-        assertThat(transactions.list,hasItem(new DebitTransaction(1000, "Aditi", new Date())));
+        transactions.debit(1000,"Aditi",1000);
+        assertThat(transactions.list,hasItem(new DebitTransaction(1000, "Aditi", 1000,new Date())));
     }
 
     @Test
     public void mustRecordCreditTransaction() {
-        transactions.credit(1000,"Aditi");
-        assertThat(transactions.list,hasItem(new CreditTransaction(1000, "Aditi", new Date())));
+        transactions.credit(1000,"Aditi",1000);
+        assertThat(transactions.list,hasItem(new CreditTransaction(1000, "Aditi", 1000,new Date())));
     }
 
     @Test
-    public void printTransaction() throws FileNotFoundException, UnsupportedEncodingException {
-        transactions.credit(1000,"Aditi");
+    public void filterTransactionByAmount() {
+        transactions.credit(1000,"Aditi",1000);
+        transactions.credit(400,"Aditi",1000);
+        transactions.credit(1400,"Aditi",1000);
+        Transactions expected = this.transactions.filterByAmountGreaterThan(1000);
+        assertThat(expected.list,hasItems(new CreditTransaction(1400,"Aditi",1000)));
+    }
+
+    @Test
+    @Ignore
+    public void filterTransactionByDate() {
+        transactions.credit(1000,"Aditi",1000);
+        transactions.credit(400,"Aditi",1000);
+//        Transactions expected = this.transactions.filterByDateAfter(new Date());
+    }
+
+    @Test
+    public void filterTransactionByType() {
+        transactions.debit(1000,"Aditi",1000);
+        transactions.credit(400,"Aditi",1000);
+        transactions.debit(1400,"Aditi",1000);
+        Transactions expected = this.transactions.filterByType("credit");
+        assertThat(expected.list,hasItem(new CreditTransaction(400,"Aditi",1000)));
+    }
+
+    @Test
+    public void shouldPrintInCSVFile() throws FileNotFoundException, UnsupportedEncodingException {
+        transactions.credit(1000,"Aditi",1000);
         ArrayList<String> expected = new ArrayList<>();
         PrintWriter writer = new PrintWriter("file-name.txt", "utf-8"){
             @Override
@@ -45,32 +71,6 @@ public class TransactionsTest {
         };
         transactions.print(writer);
         writer.close();
-        assertThat(expected,hasItems(new CreditTransaction(1000,"Aditi").toString()));
-    }
-
-    @Test
-    public void filterTransactionByAmount() {
-        transactions.credit(1000,"Aditi");
-        transactions.credit(400,"Aditi");
-        transactions.credit(1400,"Aditi");
-        Transactions expected = this.transactions.filterByAmountGreaterThan(1000);
-        assertThat(expected.list,hasItems(new CreditTransaction(1400,"Aditi")));
-    }
-
-    @Test
-    @Ignore
-    public void filterTransactionByDate() {
-        transactions.credit(1000,"Aditi");
-        transactions.credit(400,"Aditi");
-//        Transactions expected = this.transactions.filterByDateAfter(new Date());
-    }
-
-    @Test
-    public void filterTransactionByType() {
-        transactions.debit(1000,"Aditi");
-        transactions.credit(400,"Aditi");
-        transactions.debit(1400,"Aditi");
-        Transactions expected = this.transactions.filterByType("credit");
-        assertThat(expected.list,hasItem(new CreditTransaction(400,"Aditi")));
+        assertThat(expected,hasItems(new CreditTransaction(1000,"Aditi",1000).toString()));
     }
 }

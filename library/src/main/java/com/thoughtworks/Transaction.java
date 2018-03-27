@@ -8,10 +8,12 @@ public abstract class Transaction {
     protected final String source;
     protected final Date date;
     protected final String type = null;
+    private Double balance;
 
-    public Transaction(String source, double amount, Date date) {
+    public Transaction(String source, double amount,double balance, Date date) {
         this.source = source;
         this.amount = amount;
+        this.balance = balance;
         this.date = date;
     }
 
@@ -47,6 +49,10 @@ public abstract class Transaction {
 
     public double getAmount() {
         return amount;
+    }
+
+    public Double getBalance() {
+        return balance;
     }
 }
 

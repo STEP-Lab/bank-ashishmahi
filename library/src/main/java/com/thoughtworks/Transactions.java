@@ -3,6 +3,7 @@ package com.thoughtworks;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class Transactions {
     public ArrayList<Transaction> list;
@@ -11,12 +12,12 @@ public class Transactions {
          this.list = new ArrayList<>();
     }
 
-    public void debit(double amount, String to) {
-        this.list.add(new DebitTransaction(amount,to));
+    public void debit(double amount, String to,double balance) {
+        this.list.add(new DebitTransaction(amount,to,balance));
     }
 
-    public void credit(double amount, String from) {
-        this.list.add(new CreditTransaction(amount,from));
+    public void credit(double amount, String from,double balance) {
+        this.list.add(new CreditTransaction(amount,from,balance));
     }
 
     public Transactions filterByAmountGreaterThan(double amount) {

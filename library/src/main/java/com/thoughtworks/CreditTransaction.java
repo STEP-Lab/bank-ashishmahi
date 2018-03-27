@@ -11,11 +11,11 @@ public class CreditTransaction extends Transaction {
         return type;
     }
 
-    public CreditTransaction(double amount, String anotherAccount, Date date) {
-        super(anotherAccount, amount, date);
+    public CreditTransaction(double amount, String anotherAccount, double balance , Date date) {
+        super(anotherAccount, amount, balance,date);
     }
 
-    public CreditTransaction(double amount, String to) {
-        super(to,amount, new Date());
+    public CreditTransaction(double amount, String to,double balance) {
+        super(to,amount, balance,new Date());
     }
 }

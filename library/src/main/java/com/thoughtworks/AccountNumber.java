@@ -16,4 +16,8 @@ public class AccountNumber {
         validateAccountNumber(accountNumber);
         return new AccountNumber(accountNumber);
     }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
 }

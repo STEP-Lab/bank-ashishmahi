@@ -5,13 +5,13 @@ import java.util.Date;
 public class DebitTransaction extends Transaction {
     private static final String type = "debit";
 
-    public DebitTransaction(double amount, String anotherAccount,Date date) {
-        super(anotherAccount, amount, date);
+    public DebitTransaction(double amount, String anotherAccount,double balance,Date date) {
+        super(anotherAccount, amount, balance,date);
 
     }
 
-    public DebitTransaction(double amount, String to) {
-        super(to,amount, new Date());
+    public DebitTransaction(double amount, String to,double balance) {
+        super(to,amount, balance,new Date());
     }
 
     public String getType() {

@@ -13,14 +13,14 @@ public class TransactionTest {
     @Test
     public void mustCreateDebitTransaction() {
         Date date = new Date();
-        Transaction transaction = new DebitTransaction(1000, "AnotherAccount", date);
+        Transaction transaction = new DebitTransaction(1000, "AnotherAccount", 1000,date);
         assertThat(transaction.getDate().toString(),is(new Date().toString()));
     }
 
     @Test
     public void mustCreateCreditTransaction() {
         Date date = new Date();
-        Transaction transaction = new CreditTransaction(1000, "ashish", date);
+        Transaction transaction = new CreditTransaction(1000, "ashish",1000, date);
         assertThat(transaction.getDate(),is(date));
     }
 }

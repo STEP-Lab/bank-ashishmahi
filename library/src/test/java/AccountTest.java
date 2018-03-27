@@ -1,8 +1,12 @@
 import com.thoughtworks.*;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.junit.Assert.assertThat;
 
 public class AccountTest {
@@ -48,8 +52,46 @@ public class AccountTest {
         }
     }
 
+    @Test
+    public void creditAmount() throws InvalidAmountException {
+        account.credit(1000);
+        assertThat(account.getBalance(),is(11000.0));
+    }
+
+    @Test
+    public void shouldNotCreditNegativeAmount() throws InvalidAmountException{
+        try{
+            account.credit(-1000);
+        } catch (InvalidAmountException e){
+            assertThat(account.getBalance(),is(10000.0));
+        }
+    }
+
     @Test(expected = MinimumBalanceError.class)
+
     public void minimumBalanceRequired() throws MinimumBalanceError, InvalidAmountException {
         account.withDraw(9500);
+    }
+
+    @Test
+    public void shouldRecordCreditTransactionAsSoonAsTransactionHappens() throws InvalidAmountException {
+        account.credit(1000);
+        Transactions expected =  account.getTransactions();
+        assertThat(expected.list,hasItem(new CreditTransaction(1000,account.getAccountNumber(),11000)));
+    }
+
+    @Test
+    public void shouldRecordDebitTransaction() throws InvalidAmountException, MinimumBalanceError {
+        account.withDraw(1000);
+        Transactions expected =  account.getTransactions();
+        assertThat(expected.list,hasItem(new DebitTransaction(1000,account.getAccountNumber(),9000)));
+    }
+
+    @Test
+    public void shouldAddBalanceAfterTransactionInTransactions() throws InvalidAmountException, MinimumBalanceError {
+        account.withDraw(1000);
+        ArrayList list =  account.getTransactions().list;
+        Transaction expected = (Transaction) list.get(list.size()-1);
+        assertThat(expected.getBalance(),is(9000.0));
     }
 }
