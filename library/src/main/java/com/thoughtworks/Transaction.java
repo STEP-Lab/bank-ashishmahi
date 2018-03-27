@@ -7,7 +7,6 @@ public abstract class Transaction {
     protected final double amount;
     protected final String source;
     protected final Date date;
-    protected final String type = null;
     private Double balance;
 
     public Transaction(String source, double amount,double balance, Date date) {
@@ -16,9 +15,6 @@ public abstract class Transaction {
         this.balance = balance;
         this.date = date;
     }
-
-    public abstract String getType();
-
     public Date getDate() {
         return date;
     }
@@ -43,7 +39,6 @@ public abstract class Transaction {
                 "amount=" + amount +
                 ", source='" + source + '\'' +
                 ", date=" + date +
-                ", type='" + type + '\'' +
                 ", balance=" + balance +
                 '}';
     }
@@ -54,6 +49,12 @@ public abstract class Transaction {
 
     public Double getBalance() {
         return balance;
+    }
+    public String toCsv(){
+        return amount +
+                "," + source +
+                "," + date +
+                "," + balance;
     }
 }
 

@@ -1,6 +1,8 @@
 package com.thoughtworks;
 
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -55,14 +57,9 @@ public class Transactions {
         return transactions;
     }
 
-//    public Transactions filterByDateAfter(Date date) {
-//        Transactions transactions = new Transactions();
-//        for (Transaction transaction: list) {
-//            if(transaction.getDate()>date){
-//                transactions.list.add(transaction);
-//            }
-//        }
-//        return transactions;
-//    }
-
+    public void printCsv(PrintWriter writer) throws FileNotFoundException, UnsupportedEncodingException {
+        for (Transaction transaction:list) {
+            writer.println(transaction.toCsv());
+        }
+    }
 }

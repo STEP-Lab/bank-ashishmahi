@@ -82,4 +82,20 @@ public class TransactionsTest {
         writer.close();
         assertThat(expected,hasItems(new CreditTransaction(1000,"Aditi",1000).toString()));
     }
+
+    @Test
+    public void shouldWriteToCsvFile() throws FileNotFoundException, UnsupportedEncodingException {
+        transactions.credit(1000,"Ashish",1000);
+        transactions.credit(1000,"Ashish",1000);
+        ArrayList<String> expected = new ArrayList<>();
+        PrintWriter writer = new PrintWriter("test.csv", "utf-8"){
+            @Override
+            public void println(String x) {
+                expected.add(x);
+            }
+        };
+        transactions.printCsv(writer);
+        writer.close();
+        assertThat(expected,hasItems(new CreditTransaction(1000,"Ashish",1000).toCsv(),new CreditTransaction(1000,"Ashish",1000).toCsv()));
+    }
 }

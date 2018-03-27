@@ -3,8 +3,6 @@ package com.thoughtworks;
 import java.util.Date;
 
 public class DebitTransaction extends Transaction {
-    private static final String type = "debit";
-
     public DebitTransaction(double amount, String anotherAccount,double balance,Date date) {
         super(anotherAccount, amount, balance,date);
 
@@ -12,9 +10,5 @@ public class DebitTransaction extends Transaction {
 
     public DebitTransaction(double amount, String to,double balance) {
         super(to,amount, balance,new Date());
-    }
-
-    public String getType() {
-        return type;
     }
 }
