@@ -1,6 +1,7 @@
 import com.thoughtworks.*;
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class AccountTest {
 
     @Test
     public void checkBalance(){
-        assertThat(account.getBalance(),is(10000.0));
+        assertThat(account.getBalance(),is(Money.of(CurrencyUnit.of("INR"), 10000.0)));
     }
     @Test(expected = MinimumBalanceError.class)
     public void checkMinimumBalance() throws MinimumBalanceError, InvalidAccountNumber {
@@ -33,14 +34,14 @@ public class AccountTest {
         try {
             account.withDraw(9400);
         } catch (MinimumBalanceError minimumBalanceError) {
-            assertThat(account.getBalance(),is(10000.0));
+            assertThat(account.getBalance(),is(Money.of(CurrencyUnit.of("INR"), 10000.0)));
         }
     }
 
     @Test
     public void withdrawAmount() throws MinimumBalanceError, InvalidAmountException {
         account.withDraw(1000);
-        assertThat(account.getBalance(),is(9000.0));
+        assertThat(account.getBalance(),is(Money.of(CurrencyUnit.of("INR"), 9000.0)));
     }
 
     @Test
@@ -48,14 +49,14 @@ public class AccountTest {
         try{
         account.withDraw(-1000);
         } catch (InvalidAmountException e){
-            assertThat(account.getBalance(),is(10000.0));
+            assertThat(account.getBalance(),is(Money.of(CurrencyUnit.of("INR"), 10000.0)));
         }
     }
 
     @Test
     public void creditAmount() throws InvalidAmountException {
         account.credit(1000);
-        assertThat(account.getBalance(),is(11000.0));
+        assertThat(account.getBalance(),is(Money.of(CurrencyUnit.of("INR"), 11000.0)));
     }
 
     @Test
@@ -63,7 +64,7 @@ public class AccountTest {
         try{
             account.credit(-1000);
         } catch (InvalidAmountException e){
-            assertThat(account.getBalance(),is(10000.0));
+            assertThat(account.getBalance(),is(Money.of(CurrencyUnit.of("INR"), 10000.0)));
         }
     }
 

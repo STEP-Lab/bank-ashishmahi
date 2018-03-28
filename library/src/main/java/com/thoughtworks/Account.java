@@ -1,32 +1,36 @@
 package com.thoughtworks;
 
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
+
 public class Account {
-    private static final int minimumBalance = 1000;
+    private static final Money MINIMUM_BALANCE = Money.of(CurrencyUnit.of("INR"), 1000);
     private final AccountNumber accountNumber;
-    private double balance;
+    private Money balance;
     private Transactions transactions;
 
     private Account(AccountNumber accountNumber, double balance) {
+        Money money = Money.of(CurrencyUnit.of("INR"), balance);
         this.accountNumber = accountNumber;
-        this.balance = balance;
+        this.balance = money;
         this.transactions = new Transactions();
     }
 
-    private static void validateMinimumBalance(double balance) throws MinimumBalanceError {
-        if(balance< minimumBalance){
+    private static void validateMinimumBalance(Money balance) throws MinimumBalanceError {
+        if(balance.isLessThan(MINIMUM_BALANCE)) {
             throw new MinimumBalanceError();
         }
     }
 
-    public double getBalance() {
+    public Money getBalance() {
         return balance;
     }
 
     public void withDraw(double amount) throws MinimumBalanceError, InvalidAmountException {
         validateAmount(amount);
-        validateMinimumBalance(this.getBalance()-amount);
-        this.balance -= amount;
-        this.transactions.debit(amount,accountNumber.getAccountNumber(),this.getBalance());
+        validateMinimumBalance(this.getBalance().minus(amount));
+        this.balance  = balance.minus(amount);
+        this.transactions.debit(amount,accountNumber.getAccountNumber(),this.getBalance().getAmountMajor().doubleValue());
     }
 
     private void validateAmount(double amount) throws InvalidAmountException {
@@ -35,15 +39,16 @@ public class Account {
         }
     }
 
-    public static Account createAccount(AccountNumber accountNumber,double balance) throws MinimumBalanceError {
-        validateMinimumBalance(balance);
+    public static Account createAccount(AccountNumber accountNumber, double balance) throws MinimumBalanceError {
+        Money money = Money.of(CurrencyUnit.of("INR"), balance);
+        validateMinimumBalance(money);
         return new Account(accountNumber,balance);
     }
 
     public void credit(double amount) throws InvalidAmountException {
         validateAmount(amount);
-        this.balance += amount;
-        this.transactions.credit(amount,accountNumber.getAccountNumber(),this.getBalance());
+        this.balance  = balance.plus(amount);
+        this.transactions.credit(amount,accountNumber.getAccountNumber(),this.getBalance().getAmountMajor().doubleValue());
     }
 
     public Transactions getTransactions() {

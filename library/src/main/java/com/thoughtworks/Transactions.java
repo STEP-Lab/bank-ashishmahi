@@ -1,11 +1,7 @@
 package com.thoughtworks;
 
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 
 public class Transactions {
     public ArrayList<Transaction> list;
@@ -33,6 +29,7 @@ public class Transactions {
     }
 
     public void print(PrintWriter writer) {
+
         for (Transaction transaction:list) {
             writer.println(transaction.toString());
         }
@@ -57,7 +54,7 @@ public class Transactions {
         return transactions;
     }
 
-    public void printCsv(PrintWriter writer) throws FileNotFoundException, UnsupportedEncodingException {
+    public void printCsv(PrintWriter writer) {
         for (Transaction transaction:list) {
             writer.println(transaction.toCsv());
         }
