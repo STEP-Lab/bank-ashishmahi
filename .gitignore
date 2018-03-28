@@ -8,3 +8,5 @@ gradlew.bat
 .idea/
 *.iml
 out/
+library/file-name.txt
+library/test.csv
