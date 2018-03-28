@@ -70,4 +70,14 @@ public class Transactions {
         }
         return transactions;
     }
+
+    public Transactions getAllTransactionBefore(Date date) {
+        Transactions transactions = new Transactions();
+        for (Transaction transaction : list) {
+            if(transaction.getDate().compareTo(date)== -1){
+                transactions.list.add(transaction);
+            }
+        }
+        return transactions;
+    }
 }

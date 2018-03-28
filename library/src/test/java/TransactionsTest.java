@@ -60,6 +60,20 @@ public class TransactionsTest {
     }
 
     @Test
+    public void getAllTransactionBeforeDate() {
+        int date = new Date().getDate();
+        transactions.credit(1000,"Aditi",1000);
+        transactions.list.get(0).getDate().setDate(date-1);
+        transactions.credit(400,"Aditi",1000);
+        Date expectedDate = new Date();
+        expectedDate.setDate(date-1);
+        CreditTransaction transaction = new CreditTransaction(1000, "Aditi", 1000, expectedDate);
+        Transactions expected = this.transactions.getAllTransactionBefore(new Date());
+        assertThat(expected.list,hasItem(transaction));
+        assertThat(expected.list.size(),is(1));
+    }
+
+    @Test
     public void getAllCreditTransaction() {
         transactions.debit(1000,"Aditi",1000);
         transactions.credit(400,"Aditi",1000);
