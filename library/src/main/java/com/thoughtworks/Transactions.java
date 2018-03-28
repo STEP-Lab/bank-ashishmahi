@@ -2,6 +2,7 @@ package com.thoughtworks;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Transactions {
     public ArrayList<Transaction> list;
@@ -58,5 +59,15 @@ public class Transactions {
         for (Transaction transaction:list) {
             writer.println(transaction.toCsv());
         }
+    }
+
+    public Transactions getAllTransactionAfter(Date date) {
+        Transactions transactions = new Transactions();
+        for (Transaction transaction : list) {
+            if(transaction.getDate().compareTo(date)==1){
+                transactions.list.add(transaction);
+            }
+        }
+        return transactions;
     }
 }

@@ -2,12 +2,15 @@ import com.thoughtworks.CreditTransaction;
 import com.thoughtworks.DebitTransaction;
 import com.thoughtworks.Transactions;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
+
+import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.junit.Assert.assertThat;
@@ -43,11 +46,17 @@ public class TransactionsTest {
     }
 
     @Test
-    @Ignore
-    public void filterTransactionByDate() {
+    public void getAllTransactionAfterDate() {
+        int date = new Date().getDate();
         transactions.credit(1000,"Aditi",1000);
+        transactions.list.get(0).getDate().setDate(date+1);
         transactions.credit(400,"Aditi",1000);
-//        Transactions expected = this.transactions.filterByDateAfter(new Date());
+        Date expectedDate = new Date();
+        expectedDate.setDate(date+1);
+        CreditTransaction transaction = new CreditTransaction(1000, "Aditi", 1000, expectedDate);
+        Transactions expected = this.transactions.getAllTransactionAfter(new Date());
+        assertThat(expected.list,hasItem(transaction));
+        assertThat(expected.list.size(),is(1));
     }
 
     @Test
@@ -98,4 +107,5 @@ public class TransactionsTest {
         writer.close();
         assertThat(expected,hasItems(new CreditTransaction(1000,"Ashish",1000).toCsv(),new CreditTransaction(1000,"Ashish",1000).toCsv()));
     }
+
 }
